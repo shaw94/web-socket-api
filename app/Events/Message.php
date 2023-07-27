@@ -10,39 +10,26 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Chat implements ShouldBroadcast
+class Message implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
     public function __construct(public string $message)
     {
-        //
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('App.User.2'),
-        ];
+        return [new PresenceChannel('presence.chat.1')];
     }
 
     public function broadcastAs(): string
     {
-        return 'chat-message';
+        return 'message';
     }
 
     public function broadcastWith(): array
     {
-        return [
-            'message' => $this->message
-        ];
+        return ['message' => $this->message];
     }
 }

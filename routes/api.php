@@ -1,6 +1,8 @@
 <?php
 
+use App\Events\Chat;
 use App\Models\User;
+use App\Events\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,11 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/event', function (Request $request) {
+    info($request->message);
+    broadcast(new Message($request->message))->toOthers();
 });
 
 Route::post('/sanctum/token', function (Request $request) {
