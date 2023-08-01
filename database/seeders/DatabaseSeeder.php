@@ -14,7 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()->create([
-            'email' => 'user@example.app',
+            'email' => 'web@websockets.app',
+            'password' => Hash::make('password')
+        ]);
+
+        \App\Models\User::factory()->create([
+            'email' => 'mobile@websockets.app',
             'password' => Hash::make('password')
         ]);
 

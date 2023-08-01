@@ -13,9 +13,5 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    // return (int) $user->id === (int) $id;
-    return true;
-});
-
+Broadcast::channel('private.chat.{id}', fn ($user, $id) => true);
 Broadcast::channel('presence.chat.{id}', fn ($user, $id) => $user);

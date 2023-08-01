@@ -30,7 +30,7 @@ class Chat implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('App.User.2'),
+            new PrivateChannel('private.chat.1'),
         ];
     }
 

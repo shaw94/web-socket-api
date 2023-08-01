@@ -22,13 +22,13 @@ use Illuminate\Validation\ValidationException;
 
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('/private-chat', function (Request $request) {
+    broadcast(new Chat($request->message));
 });
 
-Route::post('/event', function (Request $request) {
-    info($request->message);
-    broadcast(new Message($request->message))->toOthers();
+Route::post('/presence-chat', function (Request $request) {
+    broadcast(new Message($request->message));
 });
 
 Route::post('/sanctum/token', function (Request $request) {
@@ -37,7 +37,7 @@ Route::post('/sanctum/token', function (Request $request) {
         'password' => 'required',
     ]);
 
-    $user = User::where('email', $request->email)->first();
+    $user = User::firstWhere('email', $request->email);
 
     if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
